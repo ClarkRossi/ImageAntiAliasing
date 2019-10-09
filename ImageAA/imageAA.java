@@ -137,54 +137,76 @@ public class imageAA {
         }
     }
 
-    //Function to apply SSAA to image
-    public static void ssaa() {
-        //Top right pixels
-        int trR[][] = new int[WIDTH / 2][HEIGHT / 2];
-        int trG[][] = new int[WIDTH / 2][HEIGHT / 2];
-        int trB[][] = new int[WIDTH / 2][HEIGHT / 2];
-
-        //Top left pixels
-        int tlR[][] = new int[WIDTH / 2][HEIGHT / 2];
-        int tlG[][] = new int[WIDTH / 2][HEIGHT / 2];
-        int tlB[][] = new int[WIDTH / 2][HEIGHT / 2];
-
-        //Bottom right pixels
-        int brR[][] = new int[WIDTH / 2][HEIGHT / 2];
-        int brG[][] = new int[WIDTH / 2][HEIGHT / 2];
-        int brB[][] = new int[WIDTH / 2][HEIGHT / 2];
-
-        //Bottom left pixels
-        int blR[][] = new int[WIDTH / 2][HEIGHT / 2];
-        int blG[][] = new int[WIDTH / 2][HEIGHT / 2];
-        int blB[][] = new int[WIDTH / 2][HEIGHT / 2];
-
-        //Assigns pixels to individual RGB arrays
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                //Passes values to top left pixel RGB array
-                if ((x % 2 == 0) && (y % 2 == 0)) {
-
-                }
-                //Passes values to top right pixel RGB array
-                if ((x % 2 != 0) && (y % 2 == 0)) {
-
-                }
-                //Passes values to bottom left pixel RGB array
-                if ((x % 2 == 0) && (y % 2 != 0)) {
-
-                }
-                //Passes values to bottom right pixel RGB array
-                if ((x % 2 != 0) && (y % 2 != 0)) {
-                    brR[(int) Math.ceil(x / 2)][(int) Math.ceil(y / 2)] = LR[x][y];
-                    brG[(int) Math.ceil(x / 2)][(int) Math.ceil(y / 2)] = LG[x][y];
-                    brB[(int) Math.ceil(x / 2)][(int) Math.ceil(y / 2)] = LB[x][y];
-                }
-            }
-        }
-
-        //Loops through all four RGB arrays and averages them into one RGB array
-    }
+	//Function to apply SSAA to image
+	public static void ssaa()
+	{
+		//Top right pixels
+		int trR[][] = new int[WIDTH/2][HEIGHT/2];
+		int trG[][] = new int[WIDTH/2][HEIGHT/2];
+		int trB[][] = new int[WIDTH/2][HEIGHT/2];
+		
+		//Top left pixels 
+		int tlR[][] = new int[WIDTH/2][HEIGHT/2];
+		int tlG[][] = new int[WIDTH/2][HEIGHT/2];
+		int tlB[][] = new int[WIDTH/2][HEIGHT/2];
+		
+		//Bottom right pixels
+		int brR[][] = new int[WIDTH/2][HEIGHT/2];
+		int brG[][] = new int[WIDTH/2][HEIGHT/2];
+		int brB[][] = new int[WIDTH/2][HEIGHT/2];
+		
+		//Bottom left pixels
+		int blR[][] = new int[WIDTH/2][HEIGHT/2];
+		int blG[][] = new int[WIDTH/2][HEIGHT/2];
+		int blB[][] = new int[WIDTH/2][HEIGHT/2];
+		
+		//Assigns pixels to individual RGB arrays
+		for (int x = 0; x < WIDTH; x++)
+		{
+			for (int y = 0; y < HEIGHT; y++)
+			{
+				//Passes values to top left pixel RGB array
+				if((x % 2 == 0) && (y % 2 == 0))
+				{
+					tlR[x-(x/2)][y-(y/2)] = LR[x][y];
+					tlG[x-(x/2)][y-(y/2)] = LG[x][y];
+					tlB[x-(x/2)][y-(y/2)] = LB[x][y];
+				}
+				//Passes values to top right pixel RGB array
+				if((x % 2 != 0) && (y % 2 == 0))
+				{
+					trR[(int)Math.ceil(x/2)][y-(y/2)] = LR[x][y];
+					trG[(int)Math.ceil(x/2)][y-(y/2)] = LG[x][y];
+					trB[(int)Math.ceil(x/2)][y-(y/2)] = LB[x][y];
+				}
+				//Passes values to bottom left pixel RGB array
+				if((x % 2 == 0) && (y % 2 != 0))
+				{
+					blR[x-(x/2)][(int)Math.ceil(y/2)] = LR[x][y];
+					blG[x-(x/2)][(int)Math.ceil(y/2)] = LG[x][y];
+					blB[x-(x/2)][(int)Math.ceil(y/2)] = LB[x][y];	
+				}
+				//Passes values to bottom right pixel RGB array
+				if((x % 2 != 0) && (y % 2 != 0))
+				{
+					brR[(int)Math.ceil(x/2)][(int)Math.ceil(y/2)] = LR[x][y];
+					brG[(int)Math.ceil(x/2)][(int)Math.ceil(y/2)] = LG[x][y];
+					brB[(int)Math.ceil(x/2)][(int)Math.ceil(y/2)] = LB[x][y];
+				}
+			}
+		}
+		
+		//Loops through all four RGB arrays and averages them into one RGB array
+		for (int x = 0; x < WIDTH/2; x++)
+		{
+			for (int y = 0; y < HEIGHT/2; y++)
+			{
+				R[x][y] = ((tlR[x][y] + trR[x][y] + blR[x][y] + brR[x][y])/4);
+				G[x][y] = ((tlG[x][y] + trG[x][y] + blG[x][y] + brG[x][y])/4);
+				B[x][y] = ((tlB[x][y] + trB[x][y] + blB[x][y] + brB[x][y])/4);
+			}
+		}
+	}
 
     public static void displayimage() {
         int x, y;
